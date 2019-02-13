@@ -1,0 +1,117 @@
+
+/*
+ * Table of contents   Содержание
+ *
+ *  0. General Vars, Mixins, Extends
+ *  1. Header
+ *  2. Menu main
+ *  3. Slider
+ *  4. 
+
+ *  14.
+ *
+ */
+
+
+@import 'fonts';   // 
+@import 'base';     // 
+//@import 'hexagon';    // 
+//@import 'hexagon_bg';     // 
+// @import 'phone';    // 
+@import 'media';    // 
+@import 'libs';     //
+
+
+
+/* 0. General Vars, Mixins, Extends
+ *
+ *
+*/
+.collapse{
+    
+    padding-left: 0; padding-right: 0;
+    &>.row{
+        margin-left: 0; margin-right: 0;    
+        &>[class*="mv"]{
+            padding-left: 0; padding-right: 0;
+        }
+    }
+}
+
+[class*=row].collapse{
+
+    margin-left: 0; margin-right: 0;    
+    &>[class*="mv"]{
+        padding-left: 0; padding-right: 0;
+    }
+}
+
+
+
+/* 1. Header
+ * **********************************************************************
+ *  
+*/
+
+.header{
+
+}
+.header-top{
+
+}
+.logo{
+
+    img{
+        width: auto; max-width: 100%; height: auto;
+    }
+}
+
+
+@media (max-width: 768px) {
+   
+    
+} /* media end */
+
+
+
+/* 2. Menu main
+ * **********************************************************************
+ *
+*/  
+
+.menu-main-outer{
+}
+.menu-control{
+    display: none;
+}
+.menu-main{
+}
+    .menu-main li{
+        display: inline-block;
+        
+        &:last-child{
+            margin-right: 0;
+        }
+        a{
+            display: block;
+
+            &:hover{
+
+            }
+        }
+    }
+
+
+/* 3. Slider
+ * **********************************************************************
+ *
+*/  
+
+.slider-outer,
+.section-slider{
+
+    .slider{
+        width: 100%; 
+        height: 100vh;
+    }
+}

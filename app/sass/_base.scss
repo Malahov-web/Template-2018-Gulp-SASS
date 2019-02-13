@@ -1,0 +1,144 @@
+/*
+ * .Base
+ *
+*/
+
+@import 'hexagon';      // 
+@import 'hexagon_bg';   // 
+
+
+/*
+ * Variables
+*/
+
+/* Colors */
+$red : #d31c00;
+$grey : #c4c3c3;
+
+$black : #110c0c;
+$black_t : #343333; /* text */
+$dark : #110c0c;
+$dark_t : #777676;
+
+$white : #ffffff;
+$white_t : #f7f6f6;
+$light: #ffffff;
+//$light_t : #575656;
+$light_t :  #575656;
+
+/* Fonts */
+$fb : 1rem;
+$font_family : "Open Sans",  Verdana,  Arial, sans-serif;
+$font_family_head : "Raleway",  Tahoma,  Arial, sans-serif;
+
+$l_h : 1.375 * $fb;
+$l_h : 1.375em;
+
+$font_coeff : 1.375;
+$font_h4    : $fb * $font_coeff;
+$font_h3    : $font_h4 * $font_coeff;
+$font_h2    : $font_h3 * $font_coeff;
+$font_h1    : $font_h2 * $font_coeff;
+
+$font_small   : $fb * 1/$font_coeff;
+// $font_smaller : $fb * 1/1.325;
+
+
+$l_s:  0.3em;
+$l_s_big:  0.05em;
+
+/*
+ * Mixins
+*/
+
+
+
+/*
+ * Extends
+*/
+%fullscreen{
+    position: relative; height: 100%;
+    // width: 100%;     height: 100vh;    
+}
+
+
+/*
+ * Mixins
+*/
+
+@mixin pseudoelement_left_top($value1, $value2){
+    content : "";
+    position : absolute; left : $value1; top : $value2; 
+}
+@mixin pseudoelement_right_top($value1, $value2){
+    content : "";
+    position : absolute; right : $value1; top : $value2; 
+}
+
+
+/*
+ * Base
+*/
+
+html{
+    font-size : 14px;
+    height: 100%;
+}
+body{
+    //font-size : 16px;
+    font-family : $font_family;
+    height: 100%;   
+}
+
+a{
+    text-decoration : none;
+}
+ul, ol{
+    margin: 0 ; padding: 0;
+    list-style: none;
+}
+h1, h2, h3, h4,
+.h1, .h2, .h3, .h4{
+    margin: 0;
+    line-height: $l_h;
+    font-family: $font_family_head ;
+    font-weight: bold;
+}
+h1, .h1{
+    font-size: $font_h1;
+}
+h2, .h2{
+    font-size: $font_h2;
+}
+h3, .h3{
+    font-size: $font_h3;
+}
+h4, .h4{
+    font-size: $font_h4;
+}
+
+.h1{
+    text-transform: uppercase;
+    letter-spacing: $l_s;
+}
+.h2{
+    margin-bottom: 0.5em;
+}
+h3, .h3{
+    //padding-bottom: 0.5em;
+    margin-bottom: 0.5em;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+p{
+    margin-top: 0;
+    margin-bottom: 1em;
+    font-size: $fb;
+    line-height: $l_h;
+    font-weight: 300;
+
+}
+img{
+    max-width: 100%; width: 100%; height: auto;
+}
