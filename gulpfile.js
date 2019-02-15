@@ -31,9 +31,12 @@ var gulp = require('gulp'),
     
     autoprefixer = require('gulp-autoprefixer'),
     
-    csslint = require('gulp-csslint');
+    csslint = require('gulp-csslint'),
 
-    // fontgen = require('gulp-fontgen');  // Конвертирует шрифты из otf, ttf    
+    // fontgen = require('gulp-fontgen');  // Конвертирует шрифты из otf, ttf   
+
+    iconfont = require('gulp-iconfont'),  // Собирает шрифты из SVG-иконок
+    runTimestamp = Math.round(Date.now()/1000); 
     
 
 // 2. Config 
@@ -69,7 +72,8 @@ var autoprefixerOptions = {
         .pipe(sourcemaps.init())
         .pipe(plumber())
         .pipe(sass()) // Преобразуем scss в CSS посредством gulp-sass
-        .pipe(autoprefixer(autoprefixerOptions))
+        .pipe(autoprefixer())
+        // .pipe(autoprefixer(autoprefixerOptions))
         .pipe(sourcemaps.write())
         
         .pipe(gulp.dest('app/css')) // Выгружаем результата в папку app/css
@@ -121,6 +125,23 @@ var autoprefixerOptions = {
     gulp.task('default', ['fontgen']);*/
 
 
+    // Сборка иконочных шрифтов из SVG
+    gulp.task('Iconfont', function(){
+        return gulp.src(['app/images/svg/*.svg'])
+            .pipe(iconfont({
+                fontName: 'myfont', // required
+                prependUnicode: true, // recommended option
+                formats: ['ttf', 'woff', 'woff2', 'svg'], // default, 'woff2' and 'svg' are available
+                timestamp: runTimestamp, // recommended to get consistent builds when watching files
+            }))
+            .on('glyphs', function(glyphs, options) {
+                // CSS templating, e.g.
+                console.log(glyphs, options);
+            })
+            .pipe(gulp.dest('app/fonts'));
+    });
+
+
 
 
     
@@ -163,3 +184,5 @@ var autoprefixerOptions = {
         //.pipe(browserSync.reload({stream: true}));
     });
 */      
+
+
