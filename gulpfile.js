@@ -1,86 +1,61 @@
-// 1. Requires 
-
-
 var gulp = require('gulp'),
 
     uglify = require('gulp-uglify'),  // Подключаем Uglify
 
     sass = require('gulp-sass'),  // Подключаем Sass пакет  
     
-    browserSync = require('browser-sync',;  // Подключаем Browser Sync
+    browserSync = require('browser-sync'),  // Подключаем Browser Sync
     
     concat = require('gulp-concat'), // Подключаем  Gulp Concat
     
     sourcemaps = require('gulp-sourcemaps'),  // Подключаем Gulp Sourcemaps  ( создает карту, чтобы в инспекторе браузера показывать строку стиля в sass-файле   )
     
     glob = require('glob'),
-    
-    //gulpicon = require('gulpicon/tasks/gulpicon');
-    
-    //svgSprite = require("gulp-svg-sprites");
 
-    
-    //minifyCSS = require('gulp-csso');  // CSS минификатор
-    
-    //htmlValidator = require gulp-htmlhint HTML валидатор
-    //htmlHint = require('gulp-htmlhint');  // HTML валидатор
-    
-    //csslint = require('gulp-csslint');  //  CSS линтер
-    
     plumber = require('gulp-plumber'),  // Преодхраняет остановку задачи из-за ошибки
     
-    autoprefixer = require('gulp-autoprefixer'),
+    autoprefixer = require('gulp-autoprefixer');
     
-    csslint = require('gulp-csslint'),
+    // csslint = require('gulp-csslint');
 
-    // fontgen = require('gulp-fontgen');  // Конвертирует шрифты из otf, ttf   
+var iconfont = require('gulp-iconfont');
 
-    iconfont = require('gulp-iconfont'),  // Собирает шрифты из SVG-иконок
-    runTimestamp = Math.round(Date.now()/1000); 
+var runTimestamp = Math.round(Date.now()/1000); 
+
+var async = require('async');
+
+var consolidate = require('gulp-consolidate');
+
+var svgmin = require('gulp-svgmin');
+
+var rename = require('gulp-rename');
+
+var del = require('del'); // Подключаем библиотеку для удаления файлов и папок
+
+var cleanCSS = require('gulp-clean-css');
+
+
+// Vars
+var fontName = 'themify';
+var js_owl = 'app/libs/owl.carousel/dist/owl.carousel.min.js';
+var js_selectric = 'app/libs/jquery-selectric/public/jquery.selectric.min.js';
     
-
-// 2. Config 
-
-
-var autoprefixerOptions = {
-  browsers: ['last 15 versions', 'IE 10', 'IE 11']
-};   
-     
-    
-
-// 3. Tasks  
- 
-
-    // SASS - компиляция
-    gulp.task('css', function(){ // Создаем таск "sass"
-        
-        //return gulp.src('app/sass/*.sass') // Берем все sass файлы из папки sass 
-        return gulp.src('app/css/*.css') // Берем все sass файлы из папки sass      
-
-
-            .pipe(autoprefixer())
-
-            //.pipe(sass()) // Преобразуем Sass в CSS посредством gulp-sass
-            //.pipe(gulp.dest('app/css')) // Выгружаем результата в папку app/css
-    });
-
 
     // SCSS - компиляция
     gulp.task('scss', function(){ // Создаем таск "scss"        
-        return gulp.src('app/sass/*.scss') // Берем все scss файлы из папки sass 
+        return gulp.src('app/sass/**/*.scss')
 
         .pipe(sourcemaps.init())
         .pipe(plumber())
+        // .pipe(postcss(processors, {syntax: syntax_scss}))
         .pipe(sass()) // Преобразуем scss в CSS посредством gulp-sass
+        // .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer())
-        // .pipe(autoprefixer(autoprefixerOptions))
         .pipe(sourcemaps.write())
         
-        .pipe(gulp.dest('app/css')) // Выгружаем результата в папку app/css
-        .pipe(browserSync.reload({stream: true})) // Обновляем CSS на странице при изменении            
+        .pipe(gulp.dest('app/css')) 
+        .pipe(browserSync.reload({stream: true}))
     }); 
-
-    
 
 
     // Browser-sync - автообновление старниц
@@ -94,95 +69,138 @@ var autoprefixerOptions = {
     });
     
     
-    
-
-    // Процесс разработки проекта
-    gulp.task('watch', ['browser-sync', 'scss'], function() {
-        
-        //gulp.watch('app/sass/*.sass', ['build']);
-        //gulp.watch('app/sass/*.sass', ['sass']);
-        
-        
-        //gulp.watch('app/sass/*.+(sass|scss)', ['sass', 'scss']);  // 24.07
-        gulp
-            .watch('app/sass/*.+(scss|scss)', [ 'scss']); // Наблюдение за sass файлами в папке app/sass
-        //gulp.watch('app/*.html', browserSync.reload); // Наблюдение за HTML файлами в корне проекта
-        
-    });
-    
-    
-
-
-    // Генерация шрифтов
-/*    
-    gulp.task('fontgen', function() {
-        return gulp.src("./src/*.{ttf,otf}")
-            .pipe(fontgen({
-                dest: "./dest/"
-            }));
-    });
-     
-    gulp.task('default', ['fontgen']);*/
-
-
-    // Сборка иконочных шрифтов из SVG
-    gulp.task('Iconfont', function(){
-        return gulp.src(['app/images/svg/*.svg'])
-            .pipe(iconfont({
-                fontName: 'myfont', // required
-                prependUnicode: true, // recommended option
-                formats: ['ttf', 'woff', 'woff2', 'svg'], // default, 'woff2' and 'svg' are available
-                timestamp: runTimestamp, // recommended to get consistent builds when watching files
+    // Svgmin - оптимизация svg
+    gulp.task('Svgmin', function () {
+        return gulp.src('app/images/svg-icons/*')
+            .pipe(svgmin({
+                plugins: [
+                    { removeDimensions: true },
+                    { cleanupListOfValues: true },
+                    { cleanupNumericValues: true }
+                ]
             }))
-            .on('glyphs', function(glyphs, options) {
-                // CSS templating, e.g.
-                console.log(glyphs, options);
-            })
-            .pipe(gulp.dest('app/fonts'));
+            .pipe(rename(function (path) {
+                path.basename = path.basename.replace(/\ /g, "")
+            }))
+            .pipe(gulp.dest('app/images/svg-min'));
     });
 
 
+    // Iconfont - генерация шрифта
+    gulp.task('Iconfont', function (done) {
+        var iconStream = gulp.src(['app/images/svg-min/*.svg'])
+            .pipe(iconfont({
+                fontName: fontName,
+                formats: ['ttf', 'eot', 'woff', 'svg', 'woff2'],
+                fixedWidth: true,
+                centerHorizontally: true,
+            }));
+        async.parallel([
+            function handleGlyphs(cb) {
+                iconStream.on('glyphs', function (glyphs, options) {
+                    // gulp.src('app/images/svgfontstyle/css.css')
+                    gulp.src('app/images/svgfontstyle/svgfontstyle.scss')
+                        .pipe(consolidate('lodash', {
+                            glyphs: glyphs,
+                            fontName: fontName,
+                            fontPath: '../fonts/',
+                            className: fontName,
+
+                        }))
+                        // .pipe(gulp.dest('app/css/'))
+                        .pipe(gulp.dest('app/sass/'))
+                        .on('finish', cb);
+                });
+            },
+            function handleFonts(cb) {
+                iconStream
+                    .pipe(gulp.dest('app/fonts/'+fontName+'/'))
+                    .on('finish', cb);
+            }
+        ], done);
+    }); 
 
 
-    
-/*  
-    gulp.task('concatcss', function() {
-        return gulp.src([ // Берем все необходимые библиотеки
-            //'app/libs/jquery/dist/jquery.min.js', // Берем jQuery
-            //'app/libs/magnific-popup/dist/jquery.magnific-popup.min.js' // Берем Magnific Popup
-            
-            'app/css/reset.css',
-            'app/css/grid_24_r6.css',
-            // 'app/css/fonts.css',
-            // 'app/css/ui.css'
-            ])
-            .pipe(concat('default.min.css')) // Собираем их в кучу в новом файле libs.min.js
-            .pipe(gulp.dest('app/css')); // Выгружаем в папку app/js
-    });
-*/
+    // JS - сборка
+    gulp.task('js', function() {
+      return  gulp.src(
+        [
+            js_owl,
+            js_selectric,
+            'app/js/*.js'
 
-/*
-    gulp.task('common-js', function(){      
-        return gulp.src([
-                'app/js/common.js'
-            ])
-        .pipe(concat('common.min.js')
+            //, 'app/js/menu-responsive/js/menu-responsive.js'
+        ]
+        )
+        .pipe(concat('scripts.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('app/js/'));
+        .pipe(rename('scripts.min.js'))
+        .pipe(gulp.dest('app/js/min/'));
+    }); 
 
+
+    // Lint - stylelint
+    var stylelint = require('stylelint');
+    var postcss = require('gulp-postcss');
+    var messages = require('postcss-browser-reporter');
+    var syntax_scss = require('postcss-scss');
+
+    var processors = [
+        stylelint({
+            reporters: [
+                {formatter: 'string', console: true}
+            ]
+            // ,fix: true
+        }),
+        messages({
+            selector: 'body:before'
+        })
+    ];
+
+    gulp.task('clean', function() {
+        return del.sync('dist'); // Удаляем папку dist перед сборкой
     });
 
-    gulp.task('js', ['common-js'], function() {
-        return gulp.src([
-                'app/libs/jquery/dist/jquery.min.js',
-                // плагины
-                'app/libs/jQuery.mmenu/dist/jquery.mmenu.all.js',
-                'app/js/common.js', // Всегда в конце               
-            ])
-        .pipe(concat('scripts_2.min.js')
-        .pipe(gulp.dest('app/js'))
-        //.pipe(browserSync.reload({stream: true}));
-    });
-*/      
+
+// Вызовы
+gulp.task('watch', ['browser-sync', 'scss'], function() {
+
+    gulp.watch('app/sass/**/*.+(scss|scss)', [ 'scss']);    
+});
+
+gulp.task('watchjs', ['browser-sync', 'js'], function() {
+
+    gulp.watch('app/js/*.js', ['js']);      
+}); 
+
+gulp.task('makesvgfont', ['Svgmin', 'Iconfont']);
+
+gulp.task('build', ['clean'],  function () {
+
+    gulp.src('app/*.html')
+        .pipe(gulp.dest('dist'))        
+
+    gulp.src('app/css/**/*.css')
+        .pipe(cleanCSS({compatibility: 'ie10'}))
+        .pipe(gulp.dest('dist/css'))
+
+    gulp.src('app/js/min/scripts.min.js')
+        .pipe(gulp.dest('dist/js/min'))
+
+    gulp.src('app/fonts/**/*')
+        .pipe(gulp.dest('dist/fonts'))
+
+    gulp.src('app/images/**/*')
+        .pipe(gulp.dest('dist/images'))
+
+    gulp.src('app/uploads/**/*')
+        .pipe(gulp.dest('dist/uploads'))    
+    
+});
+
+gulp.task('default', ['watch']);
+
+
+
 
 
