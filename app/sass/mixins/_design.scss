@@ -1,0 +1,88 @@
+@mixin height_leveling($type){
+    $padding_leveling: (1.5em - 1.2em) / 2;
+    // line-height: $l_h_head; 
+
+    @if $type == heading {
+        line-height: $l_h_head;
+        padding-top: $padding_leveling;
+        padding-bottom: $padding_leveling;        
+    } @if $type == heading_double {
+        line-height: $l_h_head;
+        padding-top: $padding_leveling;
+        padding-bottom: $padding_leveling;
+        height: 1 * $l_h_head + 2 * $padding_leveling;
+        overflow: hidden; position: relative;
+        text-overflow:  ellipsis;
+        // &:after{
+        //     content: "..";
+        //     position: absolute; right: 0; bottom : 0; line-height: $l_h_head;
+        // }  
+    } @else if $type == heading_bg {
+        line-height: $l_h_head;
+        padding-top: $padding_leveling;
+        padding-bottom: $padding_leveling;
+    } @else if $type == text {
+        line-height: $l_h;
+    } @else if $type == forms_element {
+        line-height: $l_h;
+        padding-top: 0.333334 * $l_h;
+        padding-bottom: 0.333334 * $l_h;
+    } @else {
+        
+    }
+
+}
+
+
+@mixin v_rhytm($type, $lh) {
+
+    @if $type == heading {
+        // line-height: $l_h_head;
+        // padding-top: $padding_leveling;
+        // padding-bottom: $padding_leveling;  
+
+    } @else if $type == text {
+        margin-top: $lh * 0.5;
+        margin-bottom: $lh * 0.5;
+    } 
+
+      @else if $type == section {
+        padding-bottom: $lh * 2;
+    } @else if $type == section-title {
+        margin-top: 2 * $l_h;
+        margin-bottom: 2 * $l_h;
+  
+    } @else if $type == section-block {
+        margin-top: 2 * $l_h;
+        // margin-bottom: 2 * $l_h;  
+    }
+     @else if $type == block {
+        margin-top: -0.5 * $l_h;
+        margin-bottom: -0.5 * $l_h;         
+    } @else if $type == item {
+        margin-top: $lh * 0.5;
+        margin-bottom: $lh * 0.5;
+    }
+     @else if $type == block-card {
+        margin-top: -$columns_gap+px;
+        margin-bottom: -$columns_gap+px;
+    }     @else if $type == card {
+        margin-top: $columns_gap+px;
+        margin-bottom: $columns_gap+px;
+    } @else {
+        
+    }    
+}
+
+
+@mixin h_rhytm($type, $fs) {
+
+    @if $type == forms_element {
+        padding-left: $columns_gap+px;
+        padding-right: $columns_gap+px;
+        padding-left: $fs * 1.25;
+        padding-right: $fs * 1.25;         
+    }  
+}
+
+

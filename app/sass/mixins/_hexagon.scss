@@ -1,0 +1,65 @@
+
+
+/*
+ * hexagon( ширина, цвет бг, бордер-ширина, бордер-цвет ){}
+*/
+
+//.hexagon{
+@mixin hexagon($hexagon_w, $hexagon_bg, $hexagon_b_w, $hexagon_border_bg ){
+
+
+
+$hexagon_h_coeff: 0.5774;
+$hexagon_h: $hexagon_w * 0.5774;
+$hexagon_ab_border_coeff: 1.4142;
+//$hexagon_h_abs: strip-unit($hexagon_h);
+$hexagon_h_abs: $hexagon_h / ($hexagon_h * 0 + 1);
+
+//top: unitless($hexagon_h)px; 
+//top: $hexagon_h;
+
+    width: $hexagon_w;
+    height: 0.5774 * $hexagon_w;
+    margin: 0.5 * $hexagon_h 0;
+    background-color: $hexagon_bg;    
+    border-left: solid $hexagon_b_w $hexagon_border_bg;
+    border-right: solid $hexagon_b_w $hexagon_border_bg; 
+    position: relative; box-sizing: border-box; //box-sizing: padding-box; 
+
+    &:before,   
+    &:after{
+        content: "";
+        position: absolute;
+        z-index: 100;         
+        width: 0.7071 * $hexagon_w;
+        height: 0.7071 * $hexagon_w;
+       // transform: scaleY( 0.01 * $hexagon_h  ) rotate(-45deg);
+       // transform: scaleY( 0.01 * $hexagon_h_abs) rotate(-45deg);
+        transform: scaleY( 0.5774) rotate(-45deg);
+        // left: 0.146447 * $hexagon_w - $hexagon_b_w;
+left: calc(0.146447 * #{$hexagon_w} - #{$hexagon_b_w} );
+// calc(#{$border_padding} - 3px)
+        background-color: inherit; box-sizing: border-box;
+
+    }  
+    &:before {
+      top: -0.5000042426813746 * 0.7071 * $hexagon_w;
+      border-top: solid $hexagon_ab_border_coeff * $hexagon_b_w $hexagon_border_bg;
+      border-right: solid $hexagon_ab_border_coeff * $hexagon_b_w $hexagon_border_bg;
+    }
+    &:after {
+      bottom: -0.5000042426813746 * 0.7071 * $hexagon_w;
+      border-bottom: solid $hexagon_ab_border_coeff * $hexagon_b_w $hexagon_border_bg;
+      border-left: solid $hexagon_ab_border_coeff * $hexagon_b_w $hexagon_border_bg;
+    }    
+
+//color: $hexagon_h_abs;
+}
+
+
+
+@function strip-unit($num) { 
+
+    @return $num/($num * 0 + 1); 
+} 
+

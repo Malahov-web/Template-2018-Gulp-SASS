@@ -1,4 +1,4 @@
-
+@charset 'utf-8';
 /*
  * Table of contents   Содержание
  *
@@ -6,112 +6,373 @@
  *  1. Header
  *  2. Menu main
  *  3. Slider
- *  4. 
-
- *  14.
+ *  4. edges
+ *  5. categories
+ *  6. actions
+ *  7. products
+ *  8. news
+ *  9. about
+ *  10. subscribe
+ *  11. social-links
+ *  12. footer
+ *  14. category-text
+ *  14. filter
+ *  15. toolbar
+ *  16. pagination
+ *  A. JS. 
+ *  B. Plugins
  *
  */
 
-
-@import 'fonts';   // 
-@import 'base';     // 
-//@import 'hexagon';    // 
-//@import 'hexagon_bg';     // 
-// @import 'phone';    // 
-@import 'media';    // 
-@import 'libs';     //
-
-
-
+@import 'mwgrid';
+@import 'fonts'; //
+@import 'svgfontstyle'; //
+@import 'base'; //
+@import 'media'; //
+@import 'libs'; //
+// @import 'hamburgers/hamburgers'; //
 /* 0. General Vars, Mixins, Extends
  *
  *
 */
-.collapse{
-    
-    padding-left: 0; padding-right: 0;
-    &>.row{
-        margin-left: 0; margin-right: 0;    
-        &>[class*="mv"]{
-            padding-left: 0; padding-right: 0;
+
+.collapse {
+    padding-left: 0; // padding-right: 0;
+    & > .row {
+        margin-left: 0;
+        margin-right: 0;
+        & > [class*="mv"] {
+            padding-left: 0;
+            padding-right: 0;
         }
     }
 }
 
-[class*=row].collapse{
-
-    margin-left: 0; margin-right: 0;    
-    &>[class*="mv"]{
-        padding-left: 0; padding-right: 0;
+[class*=row].collapse {
+    margin-left: 0;
+    margin-right: 0;
+    & > [class*="mv"] {
+        padding-left: 0;
+        padding-right: 0;
     }
 }
 
+.g-title {
+    @include v_rhytm('item', $l_h);
+    line-height: $l_h;
+}
 
+.section {
+    // margin-top: 2*$l_h;
+}
 
 /* 1. Header
  * **********************************************************************
- *  
+ *
 */
 
-.header{
-
+.header {
+    background-color: $dark;
 }
-.header-top{
 
-}
-.logo{
+/* 2. menu-main
+ * **********************************************************************
+ *
+*/
 
-    img{
-        width: auto; max-width: 100%; height: auto;
+.menu-main {
+    padding: $l_h;
+    text-align: center;
+    li {
+        display: inline-block;
+        margin: 0 1*$l_h;
+        a {
+            font-size: $fb;
+            line-height: $l_h;
+            letter-spacing: $l_s;
+            color: $text;
+            &:hover {
+                color: $accent;
+            }
+        }
     }
 }
 
+.Home-Examples-Docs {
+    width: 223px;
+    height: 16px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+}
 
-@media (max-width: 768px) {
-   
-    
-} /* media end */
+.Home__________Examples__________Docs {
+    font-size: 16px;
+    font-family: "Roboto";
+    color: rgb(255, 255, 255);
+    line-height: 1.2;
+    text-align: center;
+    position: absolute;
+    left: 1694.949px;
+    top: 21.313px;
+    width: 223px;
+    height: 16px;
+    z-index: 6;
+}
 
-
-
-/* 2. Menu main
+/* 3. main
  * **********************************************************************
  *
-*/  
+*/
 
-.menu-main-outer{
+.section-main {
+    @include gradient_grid(transparent, rgba(0, 0, 0, 0.02));
 }
-.menu-control{
-    display: none;
+
+.main {
+    padding: 4*$l_h 0;
+    &__title {
+        font-size: $font_h1 * $font_coeff;
+        line-height: $l_h;
+        color: $bg;
+    }
+    &__subtitle {
+        font-size: $font_h3;
+        font-weight: 400;
+        color: $text_alt;
+    }
 }
-.menu-main{
+
+/* 4. config
+ * **********************************************************************
+ *
+*/
+
+.section-config {
+    background-color: $bg;
 }
-    .menu-main li{
-        display: inline-block;
-        
-        &:last-child{
-            margin-right: 0;
+
+.config {
+    padding: 3*$l_h 0 2*$l_h 0;
+    &__item {
+        &-title {
+            padding: 0.5*$l_h_base 0;
+            font-size: $font_h4;
+            line-height: $l_h_base;
+            color: $text;
         }
-        a{
-            display: block;
+        &-field {
+            margin-bottom: $l_h_base;
+            input {
+                max-width: 5*$fb;
+                text-align: center;
+            }
+            label {
+                color: $text;
+            }
 
-            &:hover{
+            .field-add {
+                display: block;
+                position: relative;
+                padding-left: 2em;
+                line-height: $l_h;
+                color: transparentize($white, 0.5);
+                .button{
+                    position: absolute;
+                    left: 0; top: 50%;
+                    transform: translateY(-50%);
+                }
+            }
+            .field-remove {
 
             }
         }
     }
+}
 
-
-/* 3. Slider
+/* 5. preview
  * **********************************************************************
  *
-*/  
+*/
 
-.slider-outer,
-.section-slider{
+.section-preview {
+    padding: 3*$l_h 0 2*$l_h 0;
+}
+    
+.preview {}
 
-    .slider{
-        width: 100%; 
-        height: 100vh;
+.tabs-control {
+    li {
+        float: left;
+        // display: inline-block;
+        // padding-left: $columns_gap+px;
+        // padding-right: $columns_gap+px;
+        margin-right: 2*$columns_gap+px;;
+        width: 180px;
+        a {
+
+        }
+    }
+}
+.tabs-content {
+    li {
+        display: block;
+    }
+}
+
+
+
+.live-preview{
+    padding: 2*$l_h 0;
+    background-color: $dark;
+
+    .row>div {
+        background-color: $light_alt;
+        // background-color: $light;
+
+        &.hover-padding{
+            background-color: $accent;
+        }
+    }
+            .demo-block{
+                height: 2.5*$l_h;
+                background-color: #fff;
+                background-color: $light;
+                // background-color: $light_alt;
+
+            }    
+
+    &__width {
+        margin: 0.5*$l_h 0;
+        line-height: $l_h;
+        text-align: center;
+        color: $text;
+    }
+    &__tips{
+        margin: 0.5*$l_h 0;
+        .tip {
+            display: inline-block;
+            color: $text;
+
+            // 
+            position: relative; left: 8.33333%;
+        }
+    }
+    &-show {
+        margin-top: 2px;
+        text-align: center;
+    }
+}
+
+
+/* 6. code
+ * **********************************************************************
+ *
+*/
+
+.code{
+   
+    background-color: $dark;
+
+    pre{
+        margin: 0;
+        padding: 0 2*$columns_gap+px;
+        line-height: $l_h;
+        color: $text;
+        color: $light;
+        // color: $light_alt;
+        white-space: pre-wrap;
+
+        max-height: 400px;
+        overflow-y: scroll;
+    }
+}
+
+
+/* 7. result
+ * **********************************************************************
+ *
+*/
+
+.section-result {
+    padding: 3*$l_h 0 2*$l_h 0;
+    background-color: $bg;
+}
+.result {
+    padding-bottom: 2*$l_h;
+
+    &__item {
+        margin-bottom: $l_h;
+      
+        &-header{
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+            &-title{
+                height: 2 * $l_h_base;
+                line-height: 2 * $l_h_base;    
+                // background-color: $dark;
+
+                font-size: $font_h3;
+                // line-height: $l_h;
+                color: $text;    
+            }
+            &-copy{
+                font-size: 0;
+            }
+    }
+}
+
+
+/* 8. download
+ * **********************************************************************
+ *
+*/
+
+.download {
+    margin-bottom: $l_h;
+
+    &__title{
+        margin-bottom: $l_h;
+        font-size: $font_h3;
+        line-height: $l_h;
+        color: $light;
+
+    }
+    &__buttons{
+        .button{
+            margin-left: $columns_gap+px;
+            margin-right: $columns_gap+px;
+        }
+    }    
+}
+
+
+/* 8. footer
+ * **********************************************************************
+ *
+*/
+
+.footer {
+    padding: 0.5*$l_h;
+    background-color: $dark;
+}
+
+.copyrights{
+    font-size: $font_small;
+    text-align: center;
+    color: $light_alt;
+    a{
+        color: inherit;
+        &:hover {
+            color: $accent;
+        }
     }
 }

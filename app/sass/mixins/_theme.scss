@@ -1,0 +1,31 @@
+@mixin pallete_colors($main_color, $deg) {
+
+    $color_1: adjust-hue($main_color, $deg);
+    background-color: $color_1;    
+}
+
+
+@mixin pseudoelement_left_top($value1, $value2){
+    content : "";
+    position : absolute; left : $value1; top : $value2; 
+}
+
+
+@mixin pseudoelement_right_top($value1, $value2){
+    content : "";
+    position : absolute; right : $value1; top : $value2; 
+}
+
+
+@mixin gradient_grid($bg, $lines_color) {
+
+background-color: $bg;
+background-image: 
+    // linear-gradient(#fff 2px, transparent 2px),
+    // linear-gradient(90deg, white 2px, transparent 2px),
+    linear-gradient($lines_color 1px, transparent 1px),
+    linear-gradient(90deg, $lines_color 1px, transparent 1px);
+    background-size: 8px 8px, 8px 8px;
+// background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px;
+    
+}

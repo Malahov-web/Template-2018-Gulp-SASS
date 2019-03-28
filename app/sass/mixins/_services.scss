@@ -1,0 +1,21 @@
+@function to_number($string) {
+  // Matrices
+  $strings: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9';
+  $numbers: 0 1 2 3 4 5 6 7 8 9;
+
+  // Result
+  $result: 0;
+
+  // Looping through all characters
+  @for $i from 1 through str-length($string) {
+    // Do magic
+  }
+
+  @return $result;
+}
+
+
+$browser-context: 16;
+@function em($pixels, $context: $browser-context) {
+    @return #{$pixels/$context}em;
+}

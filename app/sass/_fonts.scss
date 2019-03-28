@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600,700&subset=cyrillic');
-@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700');
-
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&subset=cyrillic');
+// @import '../fonts/social-icons/styles'; //
 
 
 
@@ -53,6 +52,8 @@
 
 
 // @include font-face(Samplino, fonts/Samplino); 
+// @include font-face(myfont, fonts/myfont); 
 // @include font-face(SFUI-Text-Light, fonts/SFUI-Text-Light); 
 // @include font-face(SFUI-Text-Light, fonts/SFUI-Text-Bold); 
 // @include font-face(SFUI-Text-Light, fonts/SFUI-Text-Medium); 
+// @include font-face('social-icons', fonts/social-icons); 

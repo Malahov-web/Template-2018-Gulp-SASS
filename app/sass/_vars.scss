@@ -1,0 +1,63 @@
+/*
+ * Variables
+*/
+
+
+/* Colors */
+$accent: #ff8900;
+// $accent_light: lighten($accent, 13%);  // #5daee6;   // #5fafe6 
+// $accent_dark: darken($accent, 11%); // #1b72ae;  // #1b6aa1
+
+
+// Semantic colors
+$bg: #575451;
+$bg_light: #706d6b;
+// $bg_dark: #35322e;
+$dark: #303030;
+$light: #f7f3ef;
+$light_alt: #e5d9cc;
+
+$text: #ffffff;
+$text_alt: #797473;
+
+$white: #ffffff;
+$black: #000000;
+
+
+$success_color: #35dd24;
+$error_color  : #ae1b28;
+$warning_color: #aea11b; //
+$info_color   : #2491dd;
+
+
+/* Fonts */
+$fb : 1rem;
+
+$font_coeff : 1.19;
+$font_h4    : $fb * $font_coeff;  // 19
+$font_h3    : $font_h4 * $font_coeff;  // 23-24
+$font_h2    : $font_h3 * $font_coeff;  //27
+$font_h1    : $font_h2 * $font_coeff;  // 32
+
+$font_small   : $fb * 1/$font_coeff;
+$font_smaller : $font_small * 1/$font_coeff;
+
+// Semantical fonts
+$font_forms_elements: $fb;
+
+
+$l_s:  0.025em;
+$l_s_big:  0.05em;
+
+$l_h : 1.5em;
+$l_h_head: 1.2em;
+$l_h_base: 1.5 * $fb;
+
+$font_family : "Roboto",  Verdana,  Arial, sans-serif;
+$font_family_head : "Roboto",  Tahoma,  Arial, sans-serif;
+
+
+/* Z-index */
+$zindex_icon: 100;
+$zindex_nav: 200;
+$zindex_modal: 300;
