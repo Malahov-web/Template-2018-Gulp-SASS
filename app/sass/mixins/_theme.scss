@@ -16,16 +16,30 @@
     position : absolute; right : $value1; top : $value2; 
 }
 
+@mixin border_fullwidth($type, $color) {
 
-@mixin gradient_grid($bg, $lines_color) {
+        position: relative;
 
-background-color: $bg;
-background-image: 
-    // linear-gradient(#fff 2px, transparent 2px),
-    // linear-gradient(90deg, white 2px, transparent 2px),
-    linear-gradient($lines_color 1px, transparent 1px),
-    linear-gradient(90deg, $lines_color 1px, transparent 1px);
-    background-size: 8px 8px, 8px 8px;
-// background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px;
-    
+        @if $type == 'top' {
+            &:before {
+
+                @include pseudoelement_left_top(-100%, 0%); 
+
+                width: 300%;
+                height: 1px;
+                background-color: $color;
+            }
+        }
+
+        @if $type == 'bottom' {
+            &:after {
+
+               @include pseudoelement_left_top(-100%, 100%); 
+
+                width: 300%;
+                height: 1px;
+                background-color: $color;
+            }
+        }
+
 }

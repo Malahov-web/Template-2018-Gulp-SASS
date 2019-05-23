@@ -14,89 +14,216 @@
  * 1. Buttons
 */
 
-%button_round {
-    width: 1.25em;
-    height: 1.25em;
-    border-radius: 50%;
-    background-color: $dark;
-    transform: translateY(-50%);
-    font-weight: 300;
-    line-height: 1.25em;
-    text-align: center;
+@mixin hover_gradient_effect($color_first, $color_second) {
+
+    // background: $color_first;
+    background: linear-gradient(to right, $color_first, $color_first );
+
+    &:before{
+        @include pseudoelement_left_top(0, 0);
+        width: 100%; height: 100%;
+        background: linear-gradient(to right, $color_second, $color_first );
+        transition: all 0.3s ease-in-out;
+        margin-left: -100%;
+    }
+    &:hover,
+    &.hover{
+        &:before{
+            margin-left: 0;
+        }
+    }    
+
 }
 
-.button {
+
+
+.button{
     display: inline-block;
     text-align: center;
     position: relative;
     overflow: hidden;
-    letter-spacing: $l_s;
-    font-weight: 400;
 }
 
-.button-tab {
+.button-buy{
     width: 100%;
     max-width: 180px;
-    height: 2 * $l_h_base;
-    line-height: 2 * $l_h_base;    
-    background-color: $dark;
+    padding: $l_h / 3  1em;
+    // padding: 0.5em  1em;
+    background: $accent; // background: linear-gradient(to right, $accent, $accent );
+    border: 1px solid $accent_dark;
 
-    font-size: $font_h3;
-    // line-height: $l_h;
-    color: $text;
+    font-size: $fb;
+    line-height: $l_h;
+    letter-spacing: $l_s_big;
+    color: $white;    
+
+    &:before{
+        @include pseudoelement_left_top(0, 0);
+        width: 100%; height: 100%;
+        background: linear-gradient(to right, $accent_dark, $accent );
+        // transition: all 0.4s ease;
+        transition: all 0.3s ease-in-out;
+        margin-left: -100%;
+    }
 
     &:hover,
     &.hover{
-        color: $accent;
+        &:before{
+            margin-left: 0;
+        }
     }
+
+    // &:hover{
+    //     background: linear-gradient(to right, $accent_dark, $accent );
+    // }
+
     &:active,
     &.active{
-        color: $accent;
-    }     
+
+        &:before{
+            margin-left: 0;
+            background: $accent_dark; // с подмигиванием
+            // background: linear-gradient(to right, $accent_dark, $accent_dark ); // резко
+        }
+    }
+
+    &:disabled,
+    &.disabled{
+
+        border-color: $grey;
+        background: $grey_light;
+        color: $grey;
+
+        &:before{
+            margin-left: -100%;
+            // background: linear-gradient(to right, $grey, $grey );
+        }
+    }    
+
+    span{
+        position: relative;
+    }
+
 }
 
-.button-show {
+.button-buy--small{
+    padding: 0!important;
+    display: block;
+    font-size: 1 * $fb;
+    line-height: $l_h;
+    width: 1.75 * $l_h;
+    height: 1.75 * $l_h;
 
-    @extend .button-tab;
-    font-size: $font_h4;
+    i{
+
+        @include pseudoelement_left_top(50%, 50%);
+        transform: translate(-50%, -50%);
+        font-size: $font_h4; 
+        // font-size: 85%;
+
+        position: absolute;
+        z-index: 1000;
+
+    }
 }
 
-.button-copy {
+.button-send{
+    width: 100%;
+    max-width: 180px;
+    padding: $l_h / 3  1em;
+    background: $accent_light;
+    border: 1px solid $accent_dark;
 
-    @extend .button-tab;
-    height: 1.5 * $l_h_base;
-    line-height: 1.5 * $l_h_base;     
-    padding-left: $fb;
-    padding-right: $fb;
     font-size: $fb;
-    font-weight: 300;
+    line-height: $l_h;
+    letter-spacing: $l_s_big;
+    color: $white; 
+
+    &:before{
+        @include pseudoelement_left_top(0, 0);
+        width: 100%; height: 100%;
+        background: linear-gradient(to right, $accent_dark, $accent_light );
+        // transition: all 0.4s ease;
+        transition: all 0.3s ease-in-out;
+        margin-left: -100%;
+    }
+
+    &:hover,
+    &.hover{
+        &:before{
+            margin-left: 0;
+        }
+    }
+
+    &:active,
+    &.active{
+
+        &:before{
+            margin-left: 0;
+            background: $accent_dark; // с подмигиванием
+            // background: linear-gradient(to right, $accent_dark, $accent_dark ); // резко
+        }
+    }
+
+    &:disabled,
+    &.disabled{
+
+        border-color: $grey;
+        background: $grey_light;
+        color: $grey;
+
+        &:before{
+            margin-left: -100%;
+            // background: linear-gradient(to right, $grey, $grey );
+        }
+    }    
+
+    span{
+        position: relative;
+    }    
 }
 
-.button-download {
 
-    @extend .button-tab;
-    // font-size: $font_h4;
-}
+/* 
+.button-filter{
 
-.button-remove{
-    @extend %button_round;
-    vertical-align: top;
-    transform: translateY(-50%);
-    color: transparentize($white, 0.5);
-}
+    width: 100%;
+    max-width: 180px;
+    padding: $l_h / 3  1em;
+    // padding: 0.5em  1em;
+    // background: $accent;
+    border: 1px solid $accent_dark;
 
-.button-add{
-    @extend %button_round;
-    vertical-align: middle;
-    color: transparentize($white, 0.5);
-}
+    font-size: $fb;
+    line-height: $l_h;
+    letter-spacing: $l_s_big;
+    color: $white;
+    // color: transparent;
+
+    background: linear-gradient(to right, $accent, $accent );
+    transition: all 2s ease-in-out;
+
+    &:hover,
+    &.hover{
+
+        background: linear-gradient(to right, $grey, $accent );
+
+    }
+
+    &:active,
+    &.active{
+
+        background: linear-gradient(to right, $grey, $grey );
+
+    }
+
+
+} */
 
 
 /*
  * 2. Forms elements
 */
-
-$circle_offset: 4px;
 
 input,
 textarea{
@@ -111,19 +238,15 @@ textarea{
 input[type="text"]{
 
 }
-input[type="text"]{
+input.field-text{
 
-    // @include height_leveling('forms_element');
-    // @include h_rhytm('forms_element', $font_forms_elements);    
+    @include height_leveling('forms_element');
+    @include h_rhytm('forms_element', $font_forms_elements);    
 
     max-width: 240px;
-    padding: 0.5em 0.25em;
-    height: 2.5em;
 
-    font-size: 1*$fb;
-    background-color: $dark;
-    // border: 1px solid $grey_light;
-    border: none;
+    font-size: $font_forms_elements;
+    border: 1px solid $grey_light;
     color: $text;
 
     &:focus,
@@ -135,28 +258,28 @@ input[type="text"]{
     &.error{
         border-color: $error_color;
         border-color: $error_color;
-        background-color: transparentize($error_color, 0.5);
+        background-color: transparentize($error_color, 0.95);
     }    
    
 }
 
 textarea.textarea{
-    // @include height_leveling('forms_element');
-    // @include h_rhytm('forms_element', $font_forms_elements);  
+    @include height_leveling('forms_element');
+    @include h_rhytm('forms_element', $font_forms_elements);  
 
     max-width: 440px;
     min-height: 4 * $l_h;
     resize: vertical;
     max-height: 50vh;
 
-    // font-size: $font_forms_elements;
-    // border: 1px solid $grey_light;
+    font-size: $font_forms_elements;
+    border: 1px solid $grey_light;
     color: $text; 
 
     &:focus,
     &.focus{
-        // border-color: $accent;
-        // border-color: $info_color;
+        border-color: $accent;
+        border-color: $info_color;
     }  
 }
 
@@ -171,38 +294,27 @@ label,
 %input_radio_checkbox_style{
 
         position: relative;
-        height: 2.5 * $fb;
-        line-height: 2.5 * $fb;
+        padding-left: 2em;
 
         &:before{
             @include pseudoelement_left_top(0, 50%);
             transform: translateY(-50%);
 
-            width: 5 * $fb;
-            height: 2.5 * $fb;
-            background-color: $dark;
-            border-radius: 3 * $fb / 2;
+            width: 1em;
+            height: 1em;
+            border: 1px solid $accent;
         }
 
-        &:after {
-            @include pseudoelement_left_top($circle_offset, 50%);
-            transform: translateY(-50%);
-
-            width: calc(2.5 * #{$fb} - 2 * #{$circle_offset} );
-            height: calc(2.5 * #{$fb} - 2 * #{$circle_offset} );
-            background-color: $text;
-            background-color: transparentize($text, 0.4);
-            border-radius: 50%;
-
-            transition: all 0.25s ease-in-out;
+        &:hover:before,
+        &.hover:before {
+            border: 1px solid $accent_dark;
         }
 
-        // &:hover:before,
-        // &.hover:before {
-        //     border: 1px solid $warning_color;
-        // }
-
-
+        &:checked:before,
+        &.checked:before {
+            border: 1px solid $accent_dark;
+            background: linear-gradient(to right, $accent_dark, $accent);    
+        }  
 }
 
 input[type="checkbox"],
@@ -211,98 +323,411 @@ input.field-checkbox{
     opacity: 0.5;
     display: none;
 
+
     &+label{
 
     display: block;
-    padding-left: (5+1) * $fb;
     font-size: $fb;
-    color: transparentize($text, 0.5);
+    // line-height: $l_h;
+    line-height: normal;
+
+
 
         @extend %input_radio_checkbox_style;
 
         &:before{
 
         }
+/* 
+        &:before{
+            @include pseudoelement_left_top(0, 50%);
+            transform: translateY(-50%);
+
+            width: 1em;
+            height: 1em;
+            border: 1px solid $accent;
+        }
+
+        &:hover:before,
+        &.hover:before {
+            border: 1px solid $accent_dark;  
+        }
+
+        &:checked:before,
+        &.checked:before {
+            border: 1px solid $accent_dark;
+            background: linear-gradient(to right, $accent_dark, $accent);    
+        }  
+ */
+
     }
     &:checked{
         &+label{
-            color: $text;
-            &:before {    
-            }
-            &:after {
-                // right : 2px;    
-                // left: auto; 
-                transform: translate(100%, -50%);
-                left: 3 * $circle_offset;
-                // left: calc(100%);
-                background-color: $accent;
-            }             
+            &:before,
+            &:before {
+                border: 1px solid $accent_dark;
+                background: linear-gradient(to right, $accent_dark, $accent);    
+            } 
         }
     }    
 }
 
+
 input[type="radio"],
 input.field-radio{
 
+    opacity: 0.5;
     display: none;
+
 
     &+label{
 
     display: block;
-    padding-left: (2.5+1) * $fb;
     font-size: $fb;
-    color: transparentize($text, 0.5);
+    // line-height: $l_h;
+    line-height: normal;
+
+        position: relative;
+        padding-left: 2em;
 
         @extend %input_radio_checkbox_style;
 
         &:before{
-            width: 2.5 * $fb;
-            height: 2.5 * $fb;
-            background-color: $dark;
-            // border-radius: 3 * $fb / 2;            
             border-radius: 50%;
         }        
+/* 
+        &:before{
+            @include pseudoelement_left_top(0, 50%);
+            transform: translateY(-50%);
 
+            width: 1em;
+            height: 1em;
+            border: 1px solid $accent;
+
+            border-radius: 50%;
+        }
+
+        &:hover:before,
+        &.hover:before {
+            border: 1px solid $accent_dark;   
+        }
+
+        &:checked:before,
+        &.checked:before {
+            border: 1px solid $accent_dark;
+            background: linear-gradient(to right, $accent_dark, $accent);    
+        }        
+ */
     }
 
     &:checked{
         &+label{
-            color: $text;
+            &:before,
             &:before {
-   
-            }
-            &:after {
-                background-color: $accent;
-            }             
+                border: 1px solid $accent_dark;
+                background: linear-gradient(to right, $accent_dark, $accent);    
+            } 
         }
     }
 
 }
 
-select{
-    // width: 100%;
-    background-color: $white;
+/*
+ * 3. Components
+*/
 
-    margin: 0;
-    line-height: $l_h;
-    font-family: $font_family;
-    font-weight: 300; 
-
-
+.select{
     max-width: 240px;
-    padding: 0.5em 0.25em;
-    height: 2.5em;
+    border: 1px solid $accent; 
+    // background-color: transparentize($grey_light, 0.07);
+    background-color: lighten($grey_light, 15%);
+    // background-color: $accent;
 
-    font-size: 1*$fb;
-    background-color: $dark;
-    // border: 1px solid $grey_light;
-    border: none;
-    color: $text;
-    color: transparentize($white, 0.5);
- 
+    &__title{
+        @include height_leveling('forms_element');
+        @include h_rhytm('forms_element', $font_forms_elements); 
 
-    option{
-        line-height: $l_h;
-        color: transparentize($white, 0.5);
+        position: relative;
+        padding-right: 2 * $fb;
+        color: $grey_dark;
+
+        .themify{        
+            @include pseudoelement_right_top(0, 50%);
+            transform: translateY(-50%) rotate(-90deg);
+            font-size: $font_small;
+            color: $grey_dark;
+            margin-right: 1*$fb;
+
+        }   
     }
+    &__list{
+        // display: none;
+        &-item{
+            @include height_leveling('forms_element');
+            @include h_rhytm('forms_element', $font_forms_elements); 
+
+            // background: linear-gradient(to right, $accent, $accent_light);
+            color: $text;
+
+            &:hover,
+            &.hover{
+                background: linear-gradient(to right, $accent, $accent_light);
+                color: $white;
+            }
+        }
+    }  
+
+    &--closed{
+        border-color: $grey_light;
+    }
+        &--closed &__title{
+            .themify{
+                transform: translateY(-50%) rotate(90deg);
+             }        
+        }   
+
+        &--closed &__list{
+            display: none;
+            &-item.hover{
+                // background: transparent;
+            }   
+        }   
+    
+}
+
+.range{
+
+    width: 100%; max-width: 200px;
+    height: 4px;
+    background-color: $grey_light;
+
+    &__inputs{
+        @include v_rhytm('text', $l_h);
+        // display: inline-block; width: 100%;
+        &-left,
+        &-right{
+            float: left;
+            width: 50%;
+        }
+    }
+            input.field-text{
+                width: 80px;
+                padding-left: 10px; padding-right: 10px;
+            }
+
+    &__scale{
+        @include v_rhytm('text', $l_h);
+        font-size: 2*$fb;
+        position: relative;
+        height: 4px;
+        background-color: $accent;
+    }
+        &__handle{
+            position: relative;
+            font-size: 1 * $fb;
+            // box-shadow: inset 0 0 1px 10px $accent;
+
+            &--min{
+                position: absolute;
+                left: 0; top: 50%;
+                transform: translate(-50%, -50%);
+            }
+            &--max{
+                position: absolute;
+                right: 0; top: 50%;
+                transform: translate(50%, -50%);
+            }
+
+            .hexagon{
+                display: inline-block;
+                // @include hexagon_bg(280px, #c4c3c3, 2px, #575656);
+                @include hexagon(0.8 * $l_h, $white, 1px, $accent);
+            }
+        }    
+}
+
+
+.search{
+    padding-right: 60px;
+    position: relative;
+    
+    &__field{
+        max-width: none!important;
+        // padding-right: 60px;
+    } 
+    &__button{
+
+        width: 60px;
+        position: absolute;
+        right : 0; top : 0;
+    }  
+}
+
+.button-search{
+    padding: $l_h / 3  1em;
+    // padding: 0.5em  1em;
+    // background: $accent; // background: linear-gradient(to right, $accent, $accent );
+    border: 1px solid $accent_dark;
+
+    font-size: $fb;
+    line-height: $l_h;
+    letter-spacing: $l_s_big;
+    color: $white;  
+
+    //
+    @include hover_gradient_effect($accent, $accent_dark);
+
+    .themify{
+        position: relative;
+        font-size: $font_h4;
+        // z-index: 300;
+        z-index: zindex_icon;
+    }
+}
+
+%hamburger{
+    // padding: 20px;
+    // background-color: $accent;
+
+
+    @include pseudoelement_left_top(50%, 50%);
+    transform: translate(-50%, -50%);
+
+}
+
+.button-menu{
+    @include height_leveling('forms_element');
+    @include h_rhytm('forms_element', $font_forms_elements);    
+
+    // max-width: 240px;
+    position: relative;
+    box-sizing: border-box;
+    width: 50px; height: 50px;
+
+    font-size: $font_h4;
+    background-color: $accent;
+    border: 1px solid $grey_light;
+    color: transparent; 
+
+
+    
+    .hamburger{
+        @extend %hamburger; 
+    }
+}
+
+/* 19. rating
+ * **********************************************************************
+ *  
+*/
+
+.rating {
+    ul {
+        // text-align: left;
+        text-align: inherit;
+
+        li {
+            display: inline-block;
+
+            span {
+                position: relative;
+                // font-size: $fb;
+                font-size: inherit;
+                @extend .themify;
+
+                &:before {
+                    display: inline-block;
+                   
+                    @extend .themify-star;
+                    // @extend .themify-angle-right;
+                }
+            }
+           
+
+        }
+
+        li.on {
+            span {
+                &:before {
+                    color: $warning_color;
+                }  
+            }
+        }
+        li.off {
+            span {
+                &:before {
+                    color: $grey_lighter;
+                } 
+            }
+        }  
+    }
+
+}
+
+.tabs {
+    // background-color: $accent; // height: 48px;
+    margin-bottom: $l_h; 
+    // border: 1px solid $grey_super_light;
+
+    &__controls {
+        // display: inline-block;
+        float: left;
+        width: 100%;        
+
+        &-button {
+            // float: left;
+            background-color: $grey_lighter;
+            margin-right: 1px;
+
+            @media (min-width: #{map-get($devices, 'tb_')}px) {
+                float: left;
+            }
+
+            a {
+                @extend %nav_primary_item;
+                //background-color: ;
+                color: $grey_dark;
+
+
+                &:hover {
+                    background-color: $accent_light;
+                    color: $white;
+                }
+            }
+
+
+        }
+        &-button.active {
+            a {
+                background-color: $accent;
+                color: $white;
+            }
+
+        }
+    }
+    &__content {
+        float: left;
+        width: 100%;        
+        border: 1px solid $grey_super_light;
+
+        &-item {
+            @include h_rhytm('nav_element', $fb);
+            padding-top: 1 * $l_h;
+            padding-bottom: 1 * $l_h;
+            overflow: hidden;
+
+        }
+
+    }
+}
+.js-tabs__controls-button{
+    
+}
+.js-tabs__content-item{
+    display: none;
+    
+}
+.js-tabs__content-item.active{
+    display: block;
+    
 }

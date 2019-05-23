@@ -81,8 +81,13 @@
         padding-left: $columns_gap+px;
         padding-right: $columns_gap+px;
         padding-left: $fs * 1.25;
-        padding-right: $fs * 1.25;         
-    }  
+        padding-right: $fs * 1.25;      
+    } 
+    @else if $type == nav_element {
+
+        padding-left: $fs * 2;
+        padding-right: $fs * 2;         
+    }
 }
 
 
