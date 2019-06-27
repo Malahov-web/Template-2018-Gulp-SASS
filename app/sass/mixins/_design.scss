@@ -91,3 +91,54 @@
 }
 
 
+@mixin typo($type) {
+
+    @if $type == heading {
+        font-family: $font_family_head;
+        font-weight: 500;
+        letter-spacing: $l_s_big;
+        text-transform: uppercase;
+        // color: $black;  
+
+    } @else if $type == text {
+        letter-spacing: $l_s;
+
+    } @else if $type == link {
+        font-weight: 300;
+        letter-spacing: $l_s_big;
+    }     
+}
+
+
+@mixin color_scheme ($type) {
+
+    @if $type == default {
+        background-color: $white;
+        color: $text; 
+    }
+    @else if $type == dark { // +
+        background-color: $black_light;
+        color: $text_alt; 
+    }
+
+    @else if $type == accent { // +
+        background-color: transparent;
+        color: $accent;
+    }    
+    @else if $type == accent-reverse { // +
+        background-color: $accent;
+        color: $white;
+    }
+    @else if $type == card { // +
+        background-color: $white;
+        border-color: $grey_white;
+        color: $text;
+
+        border: 2px solid $grey_white;
+
+        &:hover {
+            border-color: $accent;
+        }
+    }
+
+}

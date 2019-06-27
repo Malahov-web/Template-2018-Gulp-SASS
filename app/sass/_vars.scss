@@ -55,13 +55,31 @@ $font_family : "Roboto",  Verdana,  Arial, sans-serif;
 $font_family_head : "Roboto",  Tahoma,  Arial, sans-serif;
 
 
+/* Borders */
+$bd_rad: 8px;
+
+
 /* Z-index */
 $zindex_icon: 100;
 $zindex_nav: 200;
-$zindex_modal: 300;
+$zindex_sticky: 300;
+$zindex_modal: 400;
+$zindex_tooltip: 500;
 
 
 $sidebar_width: 260;
 // $sidebar_offset: (40 - $columns_gap)+px;
 $sidebar_offset: 40px;
 
+
+/* Animation */
+$trns_dur: 0.4s;
+$transition_duration: 0.25s;
+
+
+// Last DO:
+/*
+Updt Z-index,
+Add Animation,
+
+*/

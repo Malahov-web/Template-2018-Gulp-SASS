@@ -73,3 +73,11 @@
             background-color: $grey_super_light;
         }
 }
+
+%transition {
+    transition: all $tr_dur;
+}
+
+%border {
+    border: 2px solid $border_color;
+}

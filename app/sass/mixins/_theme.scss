@@ -43,3 +43,156 @@
         }
 
 }
+
+
+
+// 01.06 added:
+
+/*
+ * Display 'flex', and set justify and aligment
+ * Call: // flex(space-between, center);
+*/
+@mixin flex($justify, $align) {
+
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+    
+}
+
+
+/*
+ * Set adaptive font-size
+ * Call: // font_size('h3');  ||  font_size(h3);  - протетстить
+*/
+
+// @mixin set_font_size_adaptive ('h3') {
+@mixin font_size ($type) {
+
+    @if $type == fb {
+
+        font-size: $fb;
+        @media (min-width: #{map-get($devices, 'ds_')}px) {
+            // font-size: $fb;
+        }
+
+    } @else if $type == small {
+
+        font-size: $font_small_m;
+        @media (min-width: #{map-get($devices, 'ds_')}px) {
+            font-size: $font_small;
+        }
+
+    } @else if $type == smaller {
+        font-size: $font_smaller_m;
+
+        @media (min-width: #{map-get($devices, 'ds_')}px) {
+            font-size: $font_smaller;
+        }
+        
+    }  @else if $type == h5 {
+
+        font-size: $font_h5_m;
+        @media (min-width: #{map-get($devices, 'ds_')}px) {
+            font-size: $font_h5;
+        }
+
+    }  @else if $type == h4 {
+
+        font-size: $font_h4_m;
+        @media (min-width: #{map-get($devices, 'ds_')}px) {
+            font-size: $font_h4;
+        }
+
+    } @else if $type == h3 {
+
+        font-size: $font_h3_m;
+        @media (min-width: #{map-get($devices, 'ds_')}px) {
+            font-size: $font_h3;
+        }
+
+    } @else if $type == h2 {
+        font-size: $font_h2_m;
+
+        @media (min-width: #{map-get($devices, 'ds_')}px) {
+            font-size: $font_h2;
+        }
+
+    } @else if $type == h1 {
+        font-size: $font_h1_m;
+
+        @media (min-width: #{map-get($devices, 'ds_')}px) {
+            font-size: $font_h1;
+        }
+    }    
+
+}
+
+
+// 27.06 added:
+
+/*
+ * Set adaptive vertical paddings
+ * Call: // v_padding(2*$l_h, $l_h)
+*/
+
+@mixin v_padding ($p_top, $p_bottom) {
+
+    // config:
+    $coeff_TB: 3/4;
+    $coeff_MB: 1/2;
+
+    padding-top: $p_top * $coeff_MB;
+    padding-bottom: $p_bottom * $coeff_MB;
+
+    @media (min-width: #{map-get($devices, 'tb_')}px) {
+        padding-top: $p_top * $coeff_TB;
+        padding-bottom: $p_bottom * $coeff_TB;
+    }
+    @media (min-width: #{map-get($devices, 'ds_')}px) {
+        padding-top: $p_top;
+        padding-bottom: $p_bottom;
+    } 
+
+}
+
+
+/*
+ * Set adaptive vertical margins
+ * Call: // v_margin(2*$l_h, $l_h)
+*/
+
+@mixin v_margin ($p_top, $p_bottom) {
+
+    margin-top: $p_top * $coeff_MB;
+    margin-bottom: $p_bottom * $coeff_MB;
+
+    @media (min-width: #{map-get($devices, 'tb_')}px) {
+        margin-top: $p_top * $coeff_TB;
+        margin-bottom: $p_bottom * $coeff_TB;
+    }
+    @media (min-width: #{map-get($devices, 'ds_')}px) {
+        margin-top: $p_top;
+        margin-bottom: $p_bottom;
+    } 
+
+}
+
+
+/*
+ * Set adaptive bg-image
+ * Call: // set_bg_adaptive('../images/section-main-bg', 1200, 'jpg');
+*/
+
+@mixin set_bg_adaptive($file_path, $breakpoint_prefix, $file_ext) {
+
+    background: #fff url($file_path+'.'+$file_ext) 0 0 no-repeat;
+
+    
+    // @media (min-width: #{map-get($devices, 'ds_')}px) {
+    @media (min-width: $breakpoint_prefix+px) {
+        
+        background-image: url($file_path+'-'+$breakpoint_prefix+'.'+$file_ext);
+    }      
+}
+
